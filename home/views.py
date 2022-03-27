@@ -28,4 +28,10 @@ def survey(request):
 #Taks List
 #1. auto generate rate object when instrument object is created 
 #2. should rates be array
+
+
+#save with git
+
+#git add .
+#git commit -am 'message here'
     
