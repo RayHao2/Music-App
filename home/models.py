@@ -28,6 +28,6 @@ class audio(models.Model):
 class rate(models.Model):
     id = models.BigAutoField(primary_key=True)
     instrumentID = models.ForeignKey(instrument, on_delete=models.CASCADE, default=1)
-    time = models.DateTimeField(default=datetime.now())
+    time = models.DateTimeField(auto_now_add = True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     rates =  models.IntegerField(default=0, )
