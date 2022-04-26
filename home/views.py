@@ -58,6 +58,10 @@ class testView(TemplateView):
 #how to create form accoding to selection?
 
 
+#To solve the file path problem try following:
+# 1. change the media root in setting to a local directiory 
+
+
 #Note
 
 #save with git
@@ -65,3 +69,5 @@ class testView(TemplateView):
 #git add .
 #git commit -am 'message here'
 #git push
+
+

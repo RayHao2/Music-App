@@ -6,7 +6,7 @@ let visible = 3
 const handleGetData = () =>{
     $.ajax({
     type: 'GET',
-    url: `/home/json/${visible}/`,
+    url: `/json/${visible}/`,
     success: function(response)
     {
         max_size = response.max
@@ -15,6 +15,7 @@ const handleGetData = () =>{
         data.map(post=>{
             console.log(post)
             aduiosBox.innerHTML +=
+            //how to get the location right?
             `
             <div class="card p-3 mt-3 mb-3">
                 <audio controls>
