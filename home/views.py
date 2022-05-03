@@ -7,6 +7,10 @@ from .models import instrument, audio, rate
 from .form import rateForm
 from django.views.generic import View, TemplateView
 from django.http import JsonResponse
+from django.core import serializers
+from django.forms.models import model_to_dict
+from django.core.serializers.json import DjangoJSONEncoder
+import json
 
 # Create your views here.
 def index(request):
@@ -15,51 +19,36 @@ def index(request):
 
 
 def survey(request):
-    if request.method == 'POST': #if something is post to the server, reference to HTML form method == post
-        form = rateForm(request.POST)
-        if form.is_valid():
-            form.save()
+    #create an instance capture user selection on audio
 
-    form = rateForm()
-    wavFile = audio.objects.all()
-    return render(request, "frontend/audio.html",{
-        'wavFile': wavFile,
-        'form': form,
-    })
+    #create two object of rate field 
+    
+    #the one where user selected should be rate =1, other one is rate =0
+
+    #save the rate object 
+
+    return render(request, "frontend/testView.html")
 
 #class that handle json response from website(button click)
 class PostJsonListView(View):
     def get(self, *args, **kwargs):
         print(kwargs)
-        #upper is to get the number from the js file to set a upper boundry
-        upper = kwargs.get('num_aduios') #intial state be 3
-        lower = upper - 3
-        #pass in the audio in to the list [lower:upper] use to set boundry
-        audios = list(audio.objects.values()[lower:upper]) 
+        #get two number from jsonrequest
+        first = kwargs.get('first') 
+        second = kwargs.get('second')
+        #get audio object accrdoing to the variable pass in
+
+        firstAudio = list(audio.objects.values()[first:first+1])
+        secondAudio = list(audio.objects.values()[second:second+1])
         
-        #comfirmation of no more audi to load
-        audio_size = len(audio.objects.values())
-        size = True if upper >= audio_size else False
-        return JsonResponse({'data':audios, 'max': size}, safe=False)
+        return JsonResponse({'firstAudio':firstAudio, 'secondAudio':secondAudio}, safe=False)
 
-
-class testView(TemplateView):
-    template_name = 'frontend/testView.html'
 
 
 
 
 #NEED TO DO
-#how to pass only 2 audio in some sort of sequence?
-    """
-    1. OR use a button to cap the next and use python to manage the id
-        -use ajax and json response to capture if the button got click
-    """
-#how to create form accoding to selection?
-
-
-#To solve the file path problem try following:
-# 1. change the media root in setting to a local directiory 
+#Pass in a form according to the instrument number 
 
 
 #Note
