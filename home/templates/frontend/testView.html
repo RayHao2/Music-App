@@ -16,7 +16,14 @@
     </audio>
 </div>
 
-<div id ="selectForm">
+<div id ="form">
+    <form action="" method=POST id="selectForm">{% csrf_token%}
+        <select id="ids" name="audios"> 
+        </select>
+        <button button="sumbit" value="Sumbit" id="sumbitbutton"> sumbit </button>
+        
+
+    </form>
 </div>
 
 

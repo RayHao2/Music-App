@@ -11,6 +11,7 @@ from django.core import serializers
 from django.forms.models import model_to_dict
 from django.core.serializers.json import DjangoJSONEncoder
 import json
+import logging
 
 # Create your views here.
 def index(request):
@@ -26,7 +27,8 @@ def survey(request):
     #the one where user selected should be rate =1, other one is rate =0
 
     #save the rate object 
-
+    choosen = request.POST.get('ids')
+    print(choosen)
     return render(request, "frontend/testView.html")
 
 #class that handle json response from website(button click)

@@ -1,7 +1,7 @@
 console.log('HELLO')
 const audioBox = document.getElementById('audio-box') //get the div audio-box
 const audioBox2 = document.getElementById('audio-box-2')
-const selectForm = document.getElementById('selectForm')
+
 
 let max = 6
 let min = 0
@@ -63,24 +63,52 @@ const handleGetData = () =>{
 
 }
 
-//function that sumbit a form of user chocing audio
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+const sumbitbutton = document.getElementById('sumbitbutton')
+const ids = document.getElementById('ids')
+//function that sumbit a form of user chocing audiovar 
 const createForm = () =>{
-    selectForm.innerHTML += 
-        `<div id ="form">
-        <form>
-            <input type="submit" value="Submit">
-        </form>
-        </div>`
+
+    ids.innerHTML = 
+        `<select id="ids" name="ids"> 
+
+        <option value ="first"> ${first+1} </option>
+        <option value ="second"> ${second+1} </option>
+        </select>`
+    sumbitbutton.innerHTML =
+        `
+        <button button="sumbit" value="sumbit" id="sumbitbutton"> sumbit </button>
+        `
+    
 
 
 }
+
 
 //call so that web can loaded when enter
 handleGetData()
 createForm()
 //event listenrs
-selectForm.addEventListener('click', ()=>{
+sumbitbutton.addEventListener('click', ()=>{
     first = Math.floor(Math.random() * (max-min) + min)
     second = Math.floor(Math.random() * (max-min) + min)
     handleGetData()
+    createForm()
+
 })
