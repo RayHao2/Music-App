@@ -1,16 +1,27 @@
-console.log('HELLO')
 const audioBox = document.getElementById('audio-box') //get the div audio-box
 const audioBox2 = document.getElementById('audio-box-2')
+let max = 7
+let min = 1
+
+var sumbitbutton = document.getElementById('sumbitbutton')
+var ids = document.getElementById('ids')
+//function that sumbit a form of user chocing audiovar 
+function createForm(first,second){
+    console.log("first,second",first,second)
+    ids.innerHTML = 
+        `<select id="ids" name="ids" type="submit"> 
+        <option id= "first" value =${first} name="first"> ${first} </option>
+        <option id = "second" value =${second} name = "second"> ${second} </option>
+        
+        </select>`
+    sumbitbutton.innerHTML =
+        `
+        <input id="sumbitbutton" type="submit" value="submit" name="choosen">
+        `
+}
 
 
-let max = 6
-let min = 0
-let first = Math.floor(Math.random() * (max-min) + min)
-let second = Math.floor(Math.random() * (max-min) + min)
-console.log(first)
-console.log(second)
-
-const handleGetData = () =>{
+const handleGetData = (first,second) =>{
     $.ajax({
     type: 'GET',
     url: `/json/${first}/${second}`,
@@ -28,7 +39,7 @@ const handleGetData = () =>{
             //how to get the location right?
             `
             <div class="card p-3 mt-3 mb-3">
-                <h> Audio ID: ${first+1}</h>
+                <h> Audio ID: ${first}</h>
                 <audio controls>
                 <source src= ${post.location} type="audio/wav"> 
                 </audio>
@@ -41,7 +52,7 @@ const handleGetData = () =>{
             //how to get the location right?
             `
             <div class="card p-3 mt-3 mb-3">
-                <h> Audio ID: ${second+1}</h>
+                <h> Audio ID: ${second}</h>
                 <audio controls>
                 <source src= ${post.location} type="audio/wav"> 
                 </audio>
@@ -58,57 +69,88 @@ const handleGetData = () =>{
 
     }//end of error
 
-})//ned of ajax
-
-
-}
-
-
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-const csrftoken = getCookie('csrftoken');
-const sumbitbutton = document.getElementById('sumbitbutton')
-const ids = document.getElementById('ids')
-//function that sumbit a form of user chocing audiovar 
-const createForm = () =>{
-
-    ids.innerHTML = 
-        `<select id="ids" name="ids"> 
-
-        <option value ="first"> ${first+1} </option>
-        <option value ="second"> ${second+1} </option>
-        </select>`
-    sumbitbutton.innerHTML =
-        `
-        <button button="sumbit" value="sumbit" id="sumbitbutton"> sumbit </button>
-        `
-    
-
+})//end of ajax
 
 }
 
 
-//call so that web can loaded when enter
-handleGetData()
-createForm()
-//event listenrs
-sumbitbutton.addEventListener('click', ()=>{
+
+const startButton = document.getElementById("startButton")
+const mainDiv = document.getElementById("hidden")
+
+//starting the rating progcess
+startButton.addEventListener('click', ()=>{
+    console.log("start button clicked")
+    mainDiv.classList.remove("hidden")
+    mainDiv.classList.add("show")
     first = Math.floor(Math.random() * (max-min) + min)
     second = Math.floor(Math.random() * (max-min) + min)
-    handleGetData()
-    createForm()
-
+    while(first == second)
+    {
+        first = Math.floor(Math.random() * (max-min) + min)
+        second = Math.floor(Math.random() * (max-min) + min)
+    }
+    handleGetData(first,second)
+    createForm(first,second)
+    startButton.classList.add("hidden")
 })
+
+
+//Stop Refresh page when form submited
+
+
+// var form = document.getElementById("selectForm");
+// form.addEventListener('submit', function (event) {
+//         // event.currentTarget.submit()
+//         // event.preventDefault();
+//         // do other stuff when the user submits a form
+//         first = Math.floor(Math.random() * (max-min) + min)
+//         second = Math.floor(Math.random() * (max-min) + min)
+//         handleGetData(first,second)
+//         createForm(first,second)
+
+// });
+
+
+
+// // function handleForm(event) { event.preventDefault(); } 
+//  sumbitbutton.addEventListener('click',  (event)=>{
+//     console.log("submit button clicked")
+//     createForm(first,second)
+// })
+
+//using ajax to achice 
+
+
+$(document).on('submit', '#selectForm', function(e){
+    e.preventDefault();
+
+    $.ajax({
+        type:'POST',
+        url:'/submit',
+        data:{
+            first:$('#first').val(),
+            second:$('#second').val(),
+            ids:$('#ids').val(),
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+
+        },
+        success:function(){
+            console.log("====submit successfully")
+            first = Math.floor(Math.random() * (max-min) + min)
+            second = Math.floor(Math.random() * (max-min) + min)
+            while(first == second)
+            {
+                first = Math.floor(Math.random() * (max-min) + min)
+                second = Math.floor(Math.random() * (max-min) + min)
+            }
+            handleGetData(first,second)
+            createForm(first,second)
+            
+        }
+    });
+    //stop at how access url
+
+
+
+});

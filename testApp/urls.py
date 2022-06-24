@@ -19,12 +19,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from home.views import PostJsonListView
+from home.views import PostJsonListView,submit
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include("home.urls")),
     path('json/<int:first>/<int:second>', PostJsonListView.as_view(), name='json' ),
+    path('submit', submit, name='submit'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

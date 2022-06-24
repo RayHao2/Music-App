@@ -2,8 +2,10 @@
 {%block body%}
 {% load static%}
 
-<h1>HELLO</h1>
 
+<button id="startButton"> start</button>
+
+<div id = "hidden" class="hidden">
 <div id ="audio-box">
     <audio controls>
         <source src= "{{data.location.url}}" type="audio/wav">
@@ -16,14 +18,23 @@
     </audio>
 </div>
 
-<div id ="form">
-    <form action="" method=POST id="selectForm">{% csrf_token%}
-        <select id="ids" name="audios"> 
-        </select>
-        <button button="sumbit" value="Sumbit" id="sumbitbutton"> sumbit </button>
-        
 
+    <iframe name="votar" style="display:none;"></iframe>
+    <form action="#" method= "POST" id="selectForm" >{% csrf_token %}
+        <select id="ids" name="ids" type="submit"> 
+            <option id= "first"  value ="first" name="first"> </option>
+            <option id= "second" value ="second" name = "second">  </option>
+            <!-- <input type="hidden" id="first" name="first" value="123">
+            <input type="hidden" id="second" name="second" value="123"> -->
+        </select>
+        <input id="sumbitbutton" type="submit" value="submit" name="choosen" >
     </form>
+
+        
+<script type="text/javascript">
+
+</script>
+
 </div>
 
 
