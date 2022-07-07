@@ -1,5 +1,6 @@
 from configparser import SectionProxy
 from email.mime import audio
+from ipaddress import ip_address
 from operator import truediv
 from re import template
 from django.shortcuts import render
@@ -56,6 +57,14 @@ def survey(request):
 #a view that use to handle ajax submission
 def submit(request):
     if request.method == 'POST':
+        # getting ip address
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.spli(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        print("=== ip:" + ip)
+        # getting data submit from ajax
         print("=== submit view recice submission")
         first = request.POST['first']
         second = request.POST['second']
@@ -63,6 +72,19 @@ def submit(request):
         print("=== first: " + first)
         print("=== second: " + second)
         print("=== selcted ids: " + ids)
+
+        # create obejct for model
+        if first == ids: #first got selected
+            rateSelected = rate.objects.create(instrumentID_id = first, ip_address = ip, rates = 1)
+            rateNotSelected = rate.objects.create(instrumentID_id = second, ip_address = ip, rates = 0)
+            rateSelected.save()
+            rateNotSelected.save()
+        else:
+            rateSelected = rate.objects.create(instrumentID_id = second, ip_address = ip, rates = 1)
+            rateNotSelected = rate.objects.create(instrumentID_id = first, ip_address = ip, rates = 0)
+            rateSelected.save()
+            rateNotSelected.save()
+            # how to generate an forgein according to id
 
 
     else:

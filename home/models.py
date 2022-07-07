@@ -31,3 +31,5 @@ class rate(models.Model):
     time = models.DateTimeField(auto_now_add = True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     rates =  models.IntegerField(default=0, )
+    #create a functin for easy model create
+    
