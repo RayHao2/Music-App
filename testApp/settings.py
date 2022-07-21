@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-_%&qo38qarqa&usq^t@a*^6*#q^)_fg0k9o0m$_)yhtywm&_-q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1:8000', 'musicsurveyapp.herokuapp.com/']
+ALLOWED_HOSTS = ['127.0.0.1', 'musicsurveyapp.herokuapp.com']
 
 
 # Application definition
@@ -110,6 +110,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+#server set up
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -124,7 +128,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS= [BASE_DIR / 'static']
 
