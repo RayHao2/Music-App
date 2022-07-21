@@ -7,7 +7,9 @@ from django.conf import settings
 
 urlpatterns=[
     path("", views.index, name='home'),
+    path('about', views.about, name='about'),
     path('survey', views.survey, name='survey'),
+
     # path('testView', views.testView.as_view(), name='testView'),
     #path('json/<int:num_aduios>/', views.PostJsonListView.as_view(), name='json'),
 ]

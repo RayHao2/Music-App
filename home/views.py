@@ -17,8 +17,13 @@ import logging
 from django.core import serializers
 
 # Create your views here.
+#home page
 def index(request):
     return render(request, "frontend/index.html")
+
+#about page
+def about(request):
+    return render(request, "frontend/about.html")
 
 
 
