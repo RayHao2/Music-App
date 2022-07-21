@@ -21,22 +21,11 @@ from django.conf.urls.static import static
 from django.conf import settings
 from home.views import PostJsonListView,submit
 
-#new added for server
-from django.views.static import serve
-from django.urls import re_path as url #adjust bc django 4.0 removed import url 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include("home.urls")),
     path('json/<int:first>/<int:second>', PostJsonListView.as_view(), name='json' ),
     path('submit', submit, name='submit'),
-
-    #new added for server
-    url(r'^media/(?P<path>.*)$', serve,{'document_root':       settings.MEDIA_ROOT}), 
-    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
-
-
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
