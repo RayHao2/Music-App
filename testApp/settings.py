@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_%&qo38qarqa&usq^t@a*^6*#q^)_fg0k9o0m$_)yhtywm&_-q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'jquery',
+    #'jquery',
     'home',
     'django.contrib.admin',
     'django.contrib.auth',
